@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { connect } from 'react-redux'
 import './App.css';
+import Hello from './components/Hello';
 
-function App() {
+function App({name, dispatch}) {
+
+  const handleChangeName = (e) => {
+    dispatch({
+      type: 'SET_NAME',
+      value: e.target.value
+    })
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        <input type="text" value={name} onChange={handleChangeName}/>
+      </div>
+      <Hello/>
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  name: state.name
+})
+
+export default connect(mapStateToProps)(App)
